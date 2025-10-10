@@ -1,0 +1,12 @@
+{
+  "name": "edubackend",
+  "version": "1.0.0",
+  "description": "gmprjct",
+  "license": "ISC",
+  "author": "ab",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
