@@ -1,18 +1,27 @@
 import express from 'express';
 import { 
   createCourse, 
-  getCourses, 
+  getAllCourses, 
   getCourseById, 
   updateCourse, 
-  deleteCourse 
+  deleteCourse,
+  enrollStudent,
+  rateCourse,
+  upload
 } from '../controllers/courseController.js';
+import { authMiddleware, authorizeRoles } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', createCourse);
-router.get('/', getCourses);
+// Apply authentication middleware to all routes
+router.use(authMiddleware);
+
+router.get('/', getAllCourses);
+router.post('/', authorizeRoles('teacher'), upload.single('pdfFile'), createCourse);
 router.get('/:id', getCourseById);
-router.put('/:id', updateCourse);
-router.delete('/:id', deleteCourse);
+router.put('/:id', authorizeRoles('teacher'), updateCourse);
+router.delete('/:id', authorizeRoles('teacher'), deleteCourse);
+router.post('/:courseId/enroll/:studentId', enrollStudent);
+router.post('/:courseId/rate', rateCourse);
 
 export default router;

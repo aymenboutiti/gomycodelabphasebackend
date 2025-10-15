@@ -14,6 +14,23 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  level: {
+    type: String,
+    enum: ['base', 'secondaire'],
+    required: true,
+  },
+  classe: {
+    type: String,
+    required: true,
+  },
+  ville: {
+    type: String,
+    required: true,
+  },
+  telephone: {
+    type: String,
+    required: true,
+  },
   courses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course',

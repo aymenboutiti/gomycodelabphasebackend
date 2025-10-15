@@ -14,10 +14,45 @@ const courseSchema = new mongoose.Schema({
     ref: 'Teacher',
     required: true,
   },
+  level: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ['video', 'pdf'],
+    required: true,
+  },
+  videoLink: {
+    type: String,
+    required: function() {
+      return this.type === 'video';
+    },
+  },
+  pdfFileName: {
+    type: String,
+    required: function() {
+      return this.type === 'pdf';
+    },
+  },
+  pdfPath: {
+    type: String,
+    required: false,
+  },
   students: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
   }],
+  rating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5,
+  },
+  downloads: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -18,6 +18,14 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  ville: {
+    type: String,
+    required: true,
+  },
+  courses: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
