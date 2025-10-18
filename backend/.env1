@@ -1,0 +1,4 @@
+ MONGODB_URI=mongodb+srv://aymenboutiti:<db_password>@cluster0.fdsyqte.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
+   PORT=3000
+   NODE_ENV=development

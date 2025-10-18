@@ -18,11 +18,11 @@ router.use(authMiddleware);
 
 router.get('/', authorizeRoles('student'), getAllTeachers);
 router.post('/', createTeacher);
+router.get('/live-requests', authorizeRoles('teacher'), getLiveRequestsForTeacher);
+router.post('/live-requests/:requestId/accept', authorizeRoles('teacher'), acceptLiveRequest);
 router.get('/:id', getTeacherById);
 router.put('/:id', updateTeacher);
 router.delete('/:id', deleteTeacher);
 router.get('/:id/courses', getTeacherCourses);
-router.get('/live-requests', authorizeRoles('teacher'), getLiveRequestsForTeacher);
-router.post('/live-requests/:requestId/accept', authorizeRoles('teacher'), acceptLiveRequest);
 
 export default router;

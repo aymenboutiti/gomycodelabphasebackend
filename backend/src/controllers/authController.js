@@ -3,7 +3,7 @@
 import User from '../models/user.js';
 import Student from '../models/student.js';
 import Teacher from '../models/teacher.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {

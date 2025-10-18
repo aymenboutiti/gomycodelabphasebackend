@@ -59,11 +59,11 @@ export const deleteTeacher = async (req, res) => {
 
 export const getTeacherCourses = async (req, res) => {
   try {
-    const courses = await Course.find({ teacher: req.params.id })
-      .populate('students', 'name email')
-      .sort({ createdAt: -1 });
+    const teacherId = req.params.id;
+    const courses = await Course.find({ teacher: teacherId });
     res.json(courses);
   } catch (error) {
+    console.error('Error retrieving teacher courses:', error);
     res.status(500).json({ message: 'Error retrieving teacher courses', error: error.message });
   }
 };
@@ -75,6 +75,7 @@ export const getLiveRequestsForTeacher = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(liveRequests);
   } catch (error) {
+    console.error('Error retrieving live requests:', error);
     res.status(500).json({ message: 'Error retrieving live requests', error: error.message });
   }
 };

@@ -20,6 +20,19 @@ export const createCourse = async (req, res) => {
   try {
     const { title, description, level, type, videoLink, teacher } = req.body;
     
+    console.log('Course creation request:', { title, description, level, type, videoLink, teacher });
+    console.log('File uploaded:', req.file);
+    console.log('Request body:', req.body);
+    
+    // Validate required fields
+    if (!title || !level || !type || !teacher) {
+      return res.status(400).json({ 
+        message: 'Missing required fields', 
+        required: ['title', 'level', 'type', 'teacher'],
+        received: { title, level, type, teacher }
+      });
+    }
+    
     const courseData = {
       title,
       description,
@@ -35,16 +48,24 @@ export const createCourse = async (req, res) => {
       courseData.pdfPath = req.file.path;
     }
 
+    console.log('Creating course with data:', courseData);
+    
     const course = new Course(courseData);
+    console.log('Course object created:', course);
+    
     await course.save();
+    console.log('Course saved to database:', course);
 
     // Add course to teacher's courses
     await Teacher.findByIdAndUpdate(teacher, {
       $push: { courses: course._id }
     });
+    console.log('Course added to teacher profile');
 
+    console.log('Course created successfully:', course);
     res.status(201).json(course);
   } catch (error) {
+    console.error('Error creating course:', error);
     res.status(400).json({ message: 'Error creating course', error: error.message });
   }
 };

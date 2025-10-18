@@ -17,7 +17,14 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get('/', getAllCourses);
-router.post('/', authorizeRoles('teacher'), upload.single('pdfFile'), createCourse);
+router.post('/', authorizeRoles('teacher'), (req, res, next) => {
+  // Only use multer middleware if the request has a file (PDF courses)
+  if (req.body.type === 'pdf') {
+    return upload.single('pdfFile')(req, res, next);
+  }
+  // For video courses, just continue without multer
+  next();
+}, createCourse);
 router.get('/:id', getCourseById);
 router.put('/:id', authorizeRoles('teacher'), updateCourse);
 router.delete('/:id', authorizeRoles('teacher'), deleteCourse);
